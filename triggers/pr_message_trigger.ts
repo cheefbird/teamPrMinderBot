@@ -1,9 +1,9 @@
-import { Trigger } from "deno-slack-api/types.ts";
 import {
   TriggerContextData,
   TriggerEventTypes,
   TriggerTypes,
 } from "deno-slack-api/mod.ts";
+import type { Trigger } from "deno-slack-api/types.ts";
 import AddPullRequestWorkflow from "../workflows/add_pr_workflow.ts";
 
 const prMessageTrigger: Trigger<typeof AddPullRequestWorkflow.definition> = {

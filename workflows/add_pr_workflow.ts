@@ -25,7 +25,8 @@ const AddPullRequestWorkflow = DefineWorkflow({
   },
 });
 
-const parsePullRequest = AddPullRequestWorkflow.addStep(
+// will use this param in the future, ignore for now
+const _parsePullRequest = AddPullRequestWorkflow.addStep(
   ParsePullRequestDefinition,
   {
     message_text: AddPullRequestWorkflow.inputs.message_text,
