@@ -1,8 +1,8 @@
 import { Manifest } from "deno-slack-sdk/mod.ts";
-import SampleWorkflow from "./workflows/sample_workflow.ts";
+import { PullRequestDatastore } from "./datastores/pr_datastore.ts";
 import SampleObjectDatastore from "./datastores/sample_datastore.ts";
-import PullRequestDatastore from "./datastores/pr_datastore.ts";
 import AddPullRequestWorkflow from "./workflows/add_pr_workflow.ts";
+import SampleWorkflow from "./workflows/sample_workflow.ts";
 
 /**
  * The app manifest contains the app's configuration. This

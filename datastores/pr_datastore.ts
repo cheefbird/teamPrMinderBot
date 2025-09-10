@@ -7,6 +7,9 @@ export const PullRequestDatastoreSchema = {
   pr_url: {
     type: Schema.types.string,
   },
+  title: {
+    type: Schema.types.string,
+  },
   author: {
     type: Schema.slack.types.user_id,
   },
@@ -24,7 +27,7 @@ export const PullRequestDatastoreSchema = {
   },
 };
 
-export default DefineDatastore({
+export const PullRequestDatastore = DefineDatastore({
   name: "PullRequests",
   primary_key: "id",
   attributes: PullRequestDatastoreSchema,

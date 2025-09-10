@@ -23,8 +23,12 @@ export const ParsePullRequestDefinition = DefineFunction({
         type: Schema.types.string,
         description: "Number of the PR, from the parser",
       },
+      pr_url: {
+        type: Schema.types.string,
+        description: "The web url for the pull request",
+      },
     },
-    required: ["repo_name", "pr_number"],
+    required: ["repo_name", "pr_number", "pr_url"],
   },
 });
 
@@ -40,11 +44,13 @@ export default SlackFunction(
 
     const [, owner, repo, pr_number] = urlMatch;
     const repo_name = `${owner}/${repo}`;
+    const pr_url = `https://github.com/${repo_name}/pulls/${pr_number}`;
 
     return {
       outputs: {
         repo_name,
         pr_number,
+        pr_url,
       },
     };
   },
