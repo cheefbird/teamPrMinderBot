@@ -2,6 +2,7 @@ import { Manifest } from "deno-slack-sdk/mod.ts";
 import SampleWorkflow from "./workflows/sample_workflow.ts";
 import SampleObjectDatastore from "./datastores/sample_datastore.ts";
 import PullRequestDatastore from "./datastores/pr_datastore.ts";
+import AddPullRequestWorkflow from "./workflows/add_pr_workflow.ts";
 
 /**
  * The app manifest contains the app's configuration. This
@@ -12,7 +13,7 @@ export default Manifest({
   name: "teamPrMinderBot",
   description: "An app that helps keep PR's moving in your team channel.",
   icon: "assets/app-icon.png",
-  workflows: [SampleWorkflow],
+  workflows: [SampleWorkflow, AddPullRequestWorkflow],
   outgoingDomains: [],
   datastores: [SampleObjectDatastore, PullRequestDatastore],
   botScopes: [
