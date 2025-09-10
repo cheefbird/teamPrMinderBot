@@ -1,4 +1,5 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
+import { ParsePullRequestDefinition } from "../functions/parse_pr.ts";
 
 const AddPullRequestWorkflow = DefineWorkflow({
   callback_id: "add_pr_workflow",
@@ -23,5 +24,12 @@ const AddPullRequestWorkflow = DefineWorkflow({
     required: ["channel_id", "user", "message_text"],
   },
 });
+
+const parsePullRequest = AddPullRequestWorkflow.addStep(
+  ParsePullRequestDefinition,
+  {
+    message_text: AddPullRequestWorkflow.inputs.message_text,
+  },
+);
 
 export default AddPullRequestWorkflow;

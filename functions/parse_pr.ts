@@ -1,12 +1,51 @@
 import { DefineFunction, Schema, SlackFunction } from "deno-slack-sdk/mod.ts";
-import type PullRequestDatastore from "../datastores/pr_datastore.ts";
 
-export const ParsePullRequest = DefineFunction({
+export const ParsePullRequestDefinition = DefineFunction({
   callback_id: "parse_pr_function",
   title: "PR URL Parser",
   description: "Extracts PR URL and parses into objects for storing",
   source_file: "functions/parse_pr.ts",
   input_parameters: {
-    properties: {},
+    properties: {
+      message_text: {
+        type: Schema.types.string,
+      },
+    },
+    required: ["message_text"],
+  },
+  output_parameters: {
+    properties: {
+      repo_name: {
+        type: Schema.types.string,
+        description: "Name of the repo, from the parser",
+      },
+      pr_number: {
+        type: Schema.types.string,
+        description: "Number of the PR, from the parser",
+      },
+    },
+    required: ["repo_name", "pr_number"],
   },
 });
+
+export default SlackFunction(
+  ParsePullRequestDefinition,
+  ({ inputs }) => {
+    const urlMatch = inputs.message_text.match(
+      /https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/pull\/(\d+)/,
+    );
+    if (!urlMatch) {
+      throw new Error("Invalid GitHub PR URL format");
+    }
+
+    const [, owner, repo, pr_number] = urlMatch;
+    const repo_name = `${owner}/${repo}`;
+
+    return {
+      outputs: {
+        repo_name,
+        pr_number,
+      },
+    };
+  },
+);
