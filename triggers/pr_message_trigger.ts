@@ -31,6 +31,9 @@ const prMessageTrigger: Trigger<typeof AddPullRequestWorkflow.definition> = {
     message_text: {
       value: TriggerContextData.Event.MessagePosted.user_id,
     },
+    message_ts: {
+      value: TriggerContextData.Event.MessagePosted.message_ts,
+    },
   },
 };
 

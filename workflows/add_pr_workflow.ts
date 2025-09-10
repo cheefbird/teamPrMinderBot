@@ -20,8 +20,13 @@ const AddPullRequestWorkflow = DefineWorkflow({
         type: Schema.types.string,
         description: "Text from the original message",
       },
+      message_ts: {
+        type: Schema.slack.types.message_ts,
+        description:
+          "Special timestamp that references the originating message",
+      },
     },
-    required: ["channel_id", "user", "message_text"],
+    required: ["channel_id", "user", "message_text", "message_ts"],
   },
 });
 
