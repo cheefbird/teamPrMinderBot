@@ -1,5 +1,6 @@
 import { DefineFunction, Schema, SlackFunction } from "deno-slack-sdk/mod.ts";
-import PullRequestDatastore, {
+import {
+  PullRequestDatastore,
   PullRequestDatastoreSchema,
 } from "../datastores/pr_datastore.ts";
 
@@ -12,6 +13,7 @@ export const SavePullRequestFunctionDefinition = DefineFunction({
     properties: PullRequestDatastoreSchema,
     required: [
       "pr_url",
+      "title",
       "author",
       "repo_name",
       "pr_number",

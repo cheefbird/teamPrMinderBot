@@ -1,5 +1,7 @@
 import { DefineWorkflow, Schema } from "deno-slack-sdk/mod.ts";
 import { ParsePullRequestDefinition } from "../functions/parse_pr.ts";
+import { FetchPrDetailFunctionDefinition } from "../functions/fetch_pr_details.ts";
+import { SavePullRequestFunctionDefinition } from "../functions/save_pr.ts";
 
 const AddPullRequestWorkflow = DefineWorkflow({
   callback_id: "add_pr_workflow",
@@ -30,12 +32,29 @@ const AddPullRequestWorkflow = DefineWorkflow({
   },
 });
 
-// will use this param in the future, ignore for now
-const _parsePullRequest = AddPullRequestWorkflow.addStep(
+const parsePullRequest = AddPullRequestWorkflow.addStep(
   ParsePullRequestDefinition,
   {
     message_text: AddPullRequestWorkflow.inputs.message_text,
   },
 );
+
+const pullRequestDetails = AddPullRequestWorkflow.addStep(
+  FetchPrDetailFunctionDefinition,
+  {
+    repo_name: parsePullRequest.outputs.repo_name,
+    pr_number: parsePullRequest.outputs.pr_number,
+  },
+);
+
+AddPullRequestWorkflow.addStep(SavePullRequestFunctionDefinition, {
+  pr_url: parsePullRequest.outputs.pr_url,
+  title: pullRequestDetails.outputs.title,
+  author: AddPullRequestWorkflow.inputs.user,
+  repo_name: parsePullRequest.outputs.repo_name,
+  pr_number: parsePullRequest.outputs.pr_number,
+  status: pullRequestDetails.outputs.pr_status,
+  message_ts: AddPullRequestWorkflow.inputs.message_ts,
+});
 
 export default AddPullRequestWorkflow;
