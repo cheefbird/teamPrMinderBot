@@ -14,7 +14,7 @@ export default Manifest({
   description: "An app that helps keep PR's moving in your team channel.",
   icon: "assets/app-icon.png",
   workflows: [SampleWorkflow, AddPullRequestWorkflow],
-  outgoingDomains: [],
+  outgoingDomains: ["github.com", "api.github.com"],
   datastores: [SampleObjectDatastore, PullRequestDatastore],
   botScopes: [
     "commands",
