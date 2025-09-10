@@ -17,7 +17,7 @@ const prMessageTrigger: Trigger<typeof AddPullRequestWorkflow.definition> = {
     filter: {
       version: 1,
       root: {
-        statement: "{{data.message}} CONTAINS 'https://github.com/LimbleCMMS/",
+        statement: "{{data.text}} CONTAINS 'https://github.com/LimbleCMMS/'",
       },
     },
   },
@@ -29,7 +29,7 @@ const prMessageTrigger: Trigger<typeof AddPullRequestWorkflow.definition> = {
       value: TriggerContextData.Event.MessagePosted.user_id,
     },
     message_text: {
-      value: TriggerContextData.Event.MessagePosted.user_id,
+      value: TriggerContextData.Event.MessagePosted.text,
     },
     message_ts: {
       value: TriggerContextData.Event.MessagePosted.message_ts,

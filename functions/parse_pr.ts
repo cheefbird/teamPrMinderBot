@@ -35,8 +35,10 @@ export const ParsePullRequestDefinition = DefineFunction({
 export default SlackFunction(
   ParsePullRequestDefinition,
   ({ inputs }) => {
+    console.log(inputs.message_text);
+
     const urlMatch = inputs.message_text.match(
-      /https:\/\/github\.com\/([^\/]+)\/([^\/]+)\/pull\/(\d+)/,
+      /https:\/\/github\.com\/([^/]+)\/([^/]+)\/pull\/(\d+)/,
     );
     if (!urlMatch) {
       throw new Error("Invalid GitHub PR URL format");
