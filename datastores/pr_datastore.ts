@@ -1,7 +1,7 @@
 import { DefineDatastore, Schema } from "deno-slack-sdk/mod.ts";
 
 export const PullRequestDatastoreSchema = {
-  unique_id: {
+  id: {
     type: Schema.types.string,
   },
   pr_url: {
@@ -23,6 +23,6 @@ export const PullRequestDatastoreSchema = {
 
 export default DefineDatastore({
   name: "PullRequests",
-  primary_key: "unique_id",
+  primary_key: "id",
   attributes: PullRequestDatastoreSchema,
 });
