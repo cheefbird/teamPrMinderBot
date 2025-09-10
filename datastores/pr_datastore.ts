@@ -19,6 +19,9 @@ export const PullRequestDatastoreSchema = {
   status: { // open, merged, closed, draft
     type: Schema.types.string,
   },
+  message_ts: {
+    type: Schema.slack.types.message_ts,
+  },
 };
 
 export default DefineDatastore({
